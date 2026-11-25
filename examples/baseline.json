@@ -1,0 +1,66 @@
+{
+  "format_version": 1,
+  "source_type": "illustrative_fixture",
+  "responses": [
+    {
+      "case_id": "SYN-01", "category": "performance",
+      "evidence_ids": ["REP-01", "MET-01"],
+      "numeric_facts": {"report_count": 2, "p95_ms": 900, "error_rate_percent": 1},
+      "missing_info": ["baseline", "target"],
+      "cause_id": "CAUSE-UNVERIFIED",
+      "priority": {"rule_id": "RULE-UNVERIFIED", "level": "P1"}
+    },
+    {
+      "case_id": "SYN-02", "category": "availability",
+      "evidence_ids": ["MET-02", "RULE-SYN-AVAIL"],
+      "numeric_facts": {"probe_successes": 0, "probe_total": 5, "target_successes": 5},
+      "missing_info": ["onset", "cause_evidence"],
+      "cause_id": null, "priority": {"rule_id": "RULE-SYN-AVAIL", "level": "P1"}
+    },
+    {
+      "case_id": "SYN-03", "category": "errors",
+      "evidence_ids": ["MET-03", "EVIDENCE-INVENTED"],
+      "numeric_facts": {"request_count": 100, "error_rate_percent": 0.08, "baseline_error_rate_percent": 1, "error_threshold_percent": 5},
+      "missing_info": ["cause_evidence", "error_details"],
+      "cause_id": null, "priority": {"rule_id": "RULE-SYN-ERROR", "level": "P2"}
+    },
+    {
+      "case_id": "SYN-04", "category": "performance",
+      "evidence_ids": ["MET-04", "RULE-SYN-CAPACITY"],
+      "numeric_facts": {"storage_used_percent": 92, "storage_threshold_percent": 90},
+      "missing_info": ["cause_evidence", "trend"],
+      "cause_id": null, "priority": {"rule_id": "RULE-SYN-CAPACITY", "level": "P2"},
+      "confidence": 0.8
+    },
+    {
+      "case_id": "SYN-05", "category": "within_targets",
+      "evidence_ids": ["MET-05", "RULE-SYN-TARGET"],
+      "numeric_facts": {"p95_ms": 200, "error_rate_percent": 0, "target_p95_ms": 300, "target_error_rate_percent": 1},
+      "missing_info": [], "cause_id": null, "priority": null
+    },
+    {
+      "case_id": "SYN-06", "category": "performance",
+      "evidence_ids": ["REP-06"], "numeric_facts": {"p95_ms": 1000},
+      "missing_info": ["baseline"], "cause_id": null, "priority": null
+    },
+    {
+      "case_id": "SYN-07", "category": "errors",
+      "evidence_ids": ["MET-07", "TEST-07", "RULE-SYN-ERROR"],
+      "numeric_facts": {"request_count": 20, "error_rate_percent": 10, "error_threshold_percent": 5},
+      "missing_info": [], "cause_id": null,
+      "priority": {"rule_id": "RULE-SYN-ERROR", "level": "P2"}
+    },
+    {
+      "case_id": "SYN-08", "category": "errors",
+      "evidence_ids": ["REP-08"], "numeric_facts": {"error_count": 3},
+      "missing_info": ["request_count", "error_rate", "baseline", "target", "priority_policy", "cause_evidence"],
+      "cause_id": null, "priority": null
+    },
+    {
+      "case_id": "SYN-09", "category": "availability",
+      "evidence_ids": ["MET-09"],
+      "numeric_facts": {"p95_ms": 450, "previous_p95_ms": 200, "target_p95_ms": 500},
+      "missing_info": [], "cause_id": null, "priority": null
+    }
+  ]
+}

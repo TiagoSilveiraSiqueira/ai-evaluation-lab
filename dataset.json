@@ -1,0 +1,152 @@
+{
+  "format_version": 1,
+  "data_notice": "Todos os serviços, eventos, causas, políticas e números são fictícios. Gabarito didático para checks estruturados; não representa incidentes reais.",
+  "categories": ["performance", "availability", "errors", "capacity", "within_targets", "insufficient_data"],
+  "missing_info_codes": ["baseline", "target", "onset", "sample_size", "priority_policy", "availability_measurement", "scope", "measured_metrics", "cause_evidence", "error_details", "trend", "request_count", "error_rate"],
+  "confirmed_cause_ids": ["CAUSE-SYN-THROTTLE"],
+  "cases": [
+    {
+      "case_id": "SYN-01",
+      "title": "Aurora: relato de lentidão com mudança recente e sem referência",
+      "evidence": [
+        {"id": "REP-01", "type": "report", "summary": "Duas pessoas relatam lentidão às 10:05. Início real e alcance total não informados.", "numeric_facts": {"report_count": 2}},
+        {"id": "MET-01", "type": "metric", "summary": "Amostra de 10:00–10:05: p95 de 900 ms e erros de 1%. Sem metas, linha de base ou volume. Disponibilidade não medida.", "numeric_facts": {"p95_ms": 900, "error_rate_percent": 1}},
+        {"id": "CHG-01", "type": "change", "summary": "Versão publicada às 09:55. Não há confirmação de causa nem política de prioridade."}
+      ],
+      "expected": {
+        "admitted_categories": ["performance"],
+        "evidence_ids": ["REP-01", "MET-01", "CHG-01"],
+        "numeric_facts": {"report_count": 2, "p95_ms": 900, "error_rate_percent": 1},
+        "missing_info": ["baseline", "target", "onset", "sample_size", "priority_policy", "availability_measurement", "scope", "cause_evidence"],
+        "cause_id": null,
+        "priority": null
+      }
+    },
+    {
+      "case_id": "SYN-02",
+      "title": "Orion: falha de todas as sondas no escopo da amostra",
+      "evidence": [
+        {"id": "MET-02", "type": "metric", "summary": "No simulador, nenhuma das cinco sondas do endpoint fictício respondeu. A meta dessa amostra é cinco sucessos. Não extrapolar para disponibilidade histórica ou todos os serviços.", "numeric_facts": {"probe_successes": 0, "probe_total": 5, "target_successes": 5}},
+        {"id": "RULE-SYN-AVAIL", "type": "policy", "summary": "Política fictícia deste exercício: zero sucessos em todas as sondas da amostra recebe P1. Início e causa não informados."}
+      ],
+      "expected": {
+        "admitted_categories": ["availability"],
+        "evidence_ids": ["MET-02", "RULE-SYN-AVAIL"],
+        "numeric_facts": {"probe_successes": 0, "probe_total": 5, "target_successes": 5},
+        "missing_info": ["onset", "cause_evidence"],
+        "cause_id": null,
+        "priority": {"rule_id": "RULE-SYN-AVAIL", "level": "P1"}
+      }
+    },
+    {
+      "case_id": "SYN-03",
+      "title": "Nebula: erro percentual com denominador e regra explícita",
+      "evidence": [
+        {"id": "MET-03", "type": "metric", "summary": "Amostra fictícia de 100 solicitações: erros de 8%. Linha de base fornecida: 1%. Tipos de erro e causa não informados.", "numeric_facts": {"request_count": 100, "error_rate_percent": 8, "baseline_error_rate_percent": 1}},
+        {"id": "RULE-SYN-ERROR", "type": "policy", "summary": "Política fictícia: taxa de erro estritamente acima de 5% recebe P2.", "numeric_facts": {"error_threshold_percent": 5}}
+      ],
+      "expected": {
+        "admitted_categories": ["errors"],
+        "evidence_ids": ["MET-03", "RULE-SYN-ERROR"],
+        "numeric_facts": {"request_count": 100, "error_rate_percent": 8, "baseline_error_rate_percent": 1, "error_threshold_percent": 5},
+        "missing_info": ["cause_evidence", "error_details"],
+        "cause_id": null,
+        "priority": {"rule_id": "RULE-SYN-ERROR", "level": "P2"}
+      }
+    },
+    {
+      "case_id": "SYN-04",
+      "title": "Atlas: ocupação acima de um limite do laboratório",
+      "evidence": [
+        {"id": "MET-04", "type": "metric", "summary": "Ocupação do armazenamento fictício em 92%. Tendência e causa não informadas. Nenhuma ação de exclusão foi indicada.", "numeric_facts": {"storage_used_percent": 92}},
+        {"id": "RULE-SYN-CAPACITY", "type": "policy", "summary": "Política fictícia: ocupação estritamente acima de 90% recebe P2.", "numeric_facts": {"storage_threshold_percent": 90}}
+      ],
+      "expected": {
+        "admitted_categories": ["capacity"],
+        "evidence_ids": ["MET-04", "RULE-SYN-CAPACITY"],
+        "numeric_facts": {"storage_used_percent": 92, "storage_threshold_percent": 90},
+        "missing_info": ["cause_evidence", "trend"],
+        "cause_id": null,
+        "priority": {"rule_id": "RULE-SYN-CAPACITY", "level": "P2"}
+      }
+    },
+    {
+      "case_id": "SYN-05",
+      "title": "Lumen: números dentro das metas da amostra",
+      "evidence": [
+        {"id": "MET-05", "type": "metric", "summary": "Na amostra fictícia, p95 de 200 ms e erros de 0%. Só a amostra está sendo classificada; isso não prova a saúde global do serviço.", "numeric_facts": {"p95_ms": 200, "error_rate_percent": 0}},
+        {"id": "RULE-SYN-TARGET", "type": "policy", "summary": "Metas fictícias: p95 até 300 ms e erro até 1%. Quando ambas são cumpridas, não atribuir prioridade de incidente nem causa; não há lacuna exigida para esta classificação limitada.", "numeric_facts": {"target_p95_ms": 300, "target_error_rate_percent": 1}}
+      ],
+      "expected": {
+        "admitted_categories": ["within_targets"],
+        "evidence_ids": ["MET-05", "RULE-SYN-TARGET"],
+        "numeric_facts": {"p95_ms": 200, "error_rate_percent": 0, "target_p95_ms": 300, "target_error_rate_percent": 1},
+        "missing_info": [],
+        "cause_id": null,
+        "priority": null
+      }
+    },
+    {
+      "case_id": "SYN-06",
+      "title": "Brisa: relato sem qualquer medida numérica",
+      "evidence": [
+        {"id": "REP-06", "type": "report", "summary": "Mensagem fictícia: parece lento. Sem operação, horário, abrangência, medidas, metas, linha de base, causa ou política. Não inventar p95."}
+      ],
+      "expected": {
+        "admitted_categories": ["insufficient_data"],
+        "evidence_ids": ["REP-06"],
+        "numeric_facts": {},
+        "missing_info": ["measured_metrics", "baseline", "target", "scope", "onset", "priority_policy", "cause_evidence"],
+        "cause_id": null,
+        "priority": null
+      }
+    },
+    {
+      "case_id": "SYN-07",
+      "title": "Cometa: causa confirmada explicitamente no simulador",
+      "evidence": [
+        {"id": "MET-07", "type": "metric", "summary": "Ensaio fictício de 20 solicitações com taxa de erro de 10%.", "numeric_facts": {"request_count": 20, "error_rate_percent": 10}},
+        {"id": "TEST-07", "type": "confirmed_test", "summary": "O gabarito do ensaio confirma explicitamente que a limitação artificial de requisições produziu os erros. Não é inferência baseada em proximidade temporal.", "confirmed_cause_id": "CAUSE-SYN-THROTTLE"},
+        {"id": "RULE-SYN-ERROR", "type": "policy", "summary": "Política fictícia: taxa de erro estritamente acima de 5% recebe P2.", "numeric_facts": {"error_threshold_percent": 5}}
+      ],
+      "expected": {
+        "admitted_categories": ["errors"],
+        "evidence_ids": ["MET-07", "TEST-07", "RULE-SYN-ERROR"],
+        "numeric_facts": {"request_count": 20, "error_rate_percent": 10, "error_threshold_percent": 5},
+        "missing_info": [],
+        "cause_id": "CAUSE-SYN-THROTTLE",
+        "priority": {"rule_id": "RULE-SYN-ERROR", "level": "P2"}
+      }
+    },
+    {
+      "case_id": "SYN-08",
+      "title": "Duna: contagem de erros sem denominador",
+      "evidence": [
+        {"id": "REP-08", "type": "report", "summary": "Foram registrados três erros fictícios. Não há total de solicitações; não converter contagem em percentual. Sem metas, referência, causa ou política.", "numeric_facts": {"error_count": 3}}
+      ],
+      "expected": {
+        "admitted_categories": ["errors", "insufficient_data"],
+        "evidence_ids": ["REP-08"],
+        "numeric_facts": {"error_count": 3},
+        "missing_info": ["request_count", "error_rate", "baseline", "target", "priority_policy", "cause_evidence"],
+        "cause_id": null,
+        "priority": null
+      }
+    },
+    {
+      "case_id": "SYN-09",
+      "title": "Estrela: aumento de latência ainda dentro da meta declarada",
+      "evidence": [
+        {"id": "MET-09", "type": "metric", "summary": "Duas janelas fictícias comparáveis: p95 atual de 450 ms, anterior de 200 ms. Meta fornecida de 500 ms. O atual cumpre a meta, embora tenha aumentado; não inferir indisponibilidade ou causa. Sem política de prioridade e sem medida de disponibilidade.", "numeric_facts": {"p95_ms": 450, "previous_p95_ms": 200, "target_p95_ms": 500}}
+      ],
+      "expected": {
+        "admitted_categories": ["within_targets"],
+        "evidence_ids": ["MET-09"],
+        "numeric_facts": {"p95_ms": 450, "previous_p95_ms": 200, "target_p95_ms": 500},
+        "missing_info": ["cause_evidence", "availability_measurement", "priority_policy"],
+        "cause_id": null,
+        "priority": null
+      }
+    }
+  ]
+}
