@@ -8,7 +8,7 @@ Aprenda a verificar respostas estruturadas de IA com um dataset pequeno, critér
 
 O avaliador lê arquivos JSON locais. Não chama modelos, serviços cloud ou APIs, não solicita chaves e não executa ações operacionais.
 
-> As respostas de `examples/baseline.json` e `examples/improved.json` são **fixtures ilustrativas escritas à mão**. Não são execuções de LLM. Os scores abaixo foram obtidos ao executar o avaliador sobre essas fixtures; não demonstram ganhos de um modelo ou de um prompt.
+> As respostas de `examples/baseline.json` e `examples/improved.json` são **fixtures ilustrativas construídas para este laboratório**. Não são respostas coletadas em um experimento de avaliação de LLM. Os scores abaixo foram obtidos ao executar o avaliador sobre essas fixtures; não demonstram ganhos de um modelo ou de um prompt.
 
 ## Comece em cerca de dez minutos
 
@@ -177,7 +177,7 @@ Essa instrução é uma sugestão didática, não um prompt avaliado nas fixture
 
 Este laboratório responde perguntas delimitadas: o JSON cumpre o contrato? Os números e IDs correspondem ao gabarito? A categoria é uma das admitidas? A resposta se abstém nos campos que exigem abstenção?
 
-Ele **não verifica a verdade de texto livre**, não compreende uma explicação operacional, não prova que uma evidência sustenta qualquer frase gerada e não resolve causalidade. Não usa regex ou sobreposição de tokens para simular esse julgamento. As categorias e lacunas esperadas são anotações humanas do dataset; o avaliador não demonstra que o gabarito está correto em um cenário real.
+Ele **não verifica a verdade de texto livre**, não compreende uma explicação operacional, não prova que uma evidência sustenta qualquer frase gerada e não resolve causalidade. Não usa regex ou sobreposição de tokens para simular esse julgamento. As categorias e lacunas esperadas são anotações de referência dos cenários didáticos; o avaliador não demonstra que o gabarito está correto em um cenário real ou que foi validado por anotadores humanos independentes.
 
 Passar 9/9 nos casos de referência demonstra compatibilidade com este gabarito pequeno. Para estudar um modelo, mantenha casos de avaliação separados dos exemplos usados na elaboração do prompt, revise as anotações, execute múltiplas amostras quando houver variação e complemente os checks com revisão humana das respostas que excedem o contrato. Relate o tamanho e a origem da amostra, sem generalizar estes nove casos.
 
